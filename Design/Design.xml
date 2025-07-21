@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <d:design projectShortName="OpcUaSampleServerNameChangeItInDesign" xmlns:d="http://cern.ch/quasar/Design" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://cern.ch/quasar/Design Design.xsd ">
   <d:class name="Person">
+  	<d:configentry dataType="UaString" name="Name"></d:configentry>
   </d:class>
   <d:class name="Family">
   	<d:hasobjects instantiateUsing="configuration" class="Person"></d:hasobjects>
+  	<d:configentry dataType="UaString" name="Name"></d:configentry>
+  	<d:configentry dataType="OpcUa_Double" name="City"></d:configentry>
   </d:class>
   <d:root>
   	<d:hasobjects instantiateUsing="configuration" class="Family"></d:hasobjects></d:root>
