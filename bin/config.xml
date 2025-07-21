@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration xmlns="http://cern.ch/quasar/Configuration" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://cern.ch/quasar/Configuration ../Configuration/Configuration.xsd ">
 
-</configuration>
+	<Family Name="Homsi" City="Beirut">
+		<Person Name="Yorgo"></Person></Family></configuration>
