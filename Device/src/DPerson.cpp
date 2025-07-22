@@ -100,10 +100,6 @@ UaStatus DPerson::callCalculateBMI (
 	OpcUa_Double weight;
 	getAddressSpaceLink()->getActualHeight(height);
 	getAddressSpaceLink()->getActualWeight(weight);
-    if (height <= 0) {
-        return OpcUa_BadInvalidArgument;
-    }
-
     BMI = weight/ std::pow(height*std::pow(10, -2) , 2);
     return OpcUa_Good;
 }
