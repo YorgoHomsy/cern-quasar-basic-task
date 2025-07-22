@@ -122,5 +122,17 @@ void DPerson::update(){
 //	//weight+=addedWeight;
 //	//getAddressSpaceLink()->setActualWeight(weight,OpcUa_Good);
 //	//addedWeight = 0;
+	OpcUa_Double currentHeight;
+	OpcUa_Double currentWeight;
+	getAddressSpaceLink()->getActualHeight(currentHeight);
+	getAddressSpaceLink()->getActualWeight(currentWeight);
+
+	if(currentHeight != lastHeight || currentWeight != lastWeight){
+		OpcUa_Double BMI;
+		callCalculateBMI(BMI);
+		getAddressSpaceLink()->setTheBMI(BMI,OpcUa_Good);
+		lastHeight = currentHeight;
+		lastWeight = currentWeight;
+	}
 }
 }

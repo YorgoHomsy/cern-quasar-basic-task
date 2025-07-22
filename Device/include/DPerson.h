@@ -67,8 +67,12 @@ private:
 public:
     void update();
 
+
 private:
-    OpcUa_Double addedWeight;
+    //OpcUa_Double addedWeight;
+
+    OpcUa_Double lastHeight;
+    OpcUa_Double lastWeight;
 
 
 };
