@@ -79,11 +79,21 @@ UaStatus DPerson::callEat (
 	addedWeight = amount;
     return OpcUa_Good;
 }
+
 UaStatus DPerson::callCalculateBMI (
     OpcUa_Double& BMI
 )
 {
-    return OpcUa_BadNotImplemented;
+	OpcUa_Double height;
+	OpcUa_Double weight;
+	getAddressSpaceLink()->getActualHeight(height);
+	getAddressSpaceLink()->getActualWeight(weight);
+    if (height <= 0) {
+        return OpcUa_BadInvalidArgument;
+    }
+
+    BMI = weight / (height * height);
+    return OpcUa_Good;
 }
 
 // 3333333333333333333333333333333333333333333333333333333333333333333333333
