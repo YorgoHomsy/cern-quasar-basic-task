@@ -22,7 +22,7 @@
 
 #include <DPerson.h>
 #include <ASPerson.h>
-
+#include <cmath>
 namespace Device
 {
 // 1111111111111111111111111111111111111111111111111111111111111111111111111
@@ -92,7 +92,7 @@ UaStatus DPerson::callCalculateBMI (
         return OpcUa_BadInvalidArgument;
     }
 
-    BMI = weight / (height * height);
+    BMI = weight*std::pow(10, -2) / std::pow(height, 2);
     return OpcUa_Good;
 }
 
