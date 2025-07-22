@@ -75,6 +75,9 @@ DPerson::~DPerson ()
 // 3     You can do whatever you want, but please be decent.               3
 // 33333333333333333333333333333333eightSet(rand(),ua_good);33333333333333333333333333333333333333333
 void DPerson::update(){
-	getAddressSpaceLink()->setWeightSet(rand(),OpcUa_Good);
+	OpcUa_Double height;
+	getAddressSpaceLink()->getHeightSet(height);
+	OpcUa_Double weight;
+	getAddressSpaceLink()->getWeightSet(weight);
 }
 }
