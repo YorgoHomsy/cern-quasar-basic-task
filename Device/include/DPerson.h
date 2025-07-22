@@ -63,7 +63,7 @@ public:
     void update();
 
 private:
-
+    OpcUa_Double addedWeight;
 
 
 };

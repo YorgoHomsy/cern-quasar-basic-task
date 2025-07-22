@@ -72,7 +72,12 @@ UaStatus DPerson::callEat (
     OpcUa_Double amount
 )
 {
-    return OpcUa_BadNotImplemented;
+	if(amount<=0){
+		return OpcUa_BadInvalidState;
+	}
+
+	addedWeight = amount;
+    return OpcUa_Good;
 }
 
 // 3333333333333333333333333333333333333333333333333333333333333333333333333
@@ -83,7 +88,10 @@ UaStatus DPerson::callEat (
 void DPerson::update(){
 	OpcUa_Double height;
 	getAddressSpaceLink()->getHeightSet(height);
+	getAddressSpaceLink()->setActualHeight(height,OpcUa_Good);
 	OpcUa_Double weight;
 	getAddressSpaceLink()->getWeightSet(weight);
+	getAddressSpaceLink()->setActualWeight(weight+addedWeight,OpcUa_Good);
+	addedWeight = 0;
 }
 }
