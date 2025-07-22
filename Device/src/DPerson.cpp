@@ -94,8 +94,8 @@ UaStatus DPerson::callEat (
 //	getAddressSpaceLink()->setActualWeight(new_weight, OpcUa_Good);
 
 
-
-	OpcUa_Double new_weight = getAddressSpaceLink()->getActualWeight(new_weight) + amount;
+	OpcUa_Double weight;
+	OpcUa_Double new_weight = getAddressSpaceLink()->getActualWeight(weight) + amount;
 	getAddressSpaceLink()->setActualWeight(new_weight, OpcUa_Good);
 
     return OpcUa_Good;
