@@ -91,7 +91,8 @@ void DPerson::update(){
 	getAddressSpaceLink()->setActualHeight(height,OpcUa_Good);
 	OpcUa_Double weight;
 	getAddressSpaceLink()->getWeightSet(weight);
-	getAddressSpaceLink()->setActualWeight(weight+addedWeight,OpcUa_Good);
+	weight+=addedWeight;
+	getAddressSpaceLink()->setActualWeight(weight,OpcUa_Good);
 	addedWeight = 0;
 }
 }
