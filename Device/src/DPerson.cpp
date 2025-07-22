@@ -68,6 +68,12 @@ DPerson::~DPerson ()
 
 
 /* delegators for methods */
+UaStatus DPerson::callEat (
+    OpcUa_Double amount
+)
+{
+    return OpcUa_BadNotImplemented;
+}
 
 // 3333333333333333333333333333333333333333333333333333333333333333333333333
 // 3     FULLY CUSTOM CODE STARTS HERE                                     3

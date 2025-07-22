@@ -45,6 +45,9 @@ public:
 
 
     /* delegators for methods */
+    UaStatus callEat (
+        OpcUa_Double amount
+    ) ;
 
 private:
     /* Delete copy constructor and assignment operator */
