@@ -88,7 +88,11 @@ UaStatus DPerson::callEat (
 		return OpcUa_BadInvalidState;
 	}
 
-	addedWeight = amount;
+	OpcUa_Double weight;
+	OpcUa_Double current_weight = getAddressSpaceLink()->getActualWeight(weight);
+	OpcUa_Double new_weight = weight + amount;
+	getAddressSpaceLink()->setActualWeight(new_weight, OpcUa_Good);
+
     return OpcUa_Good;
 }
 
@@ -114,8 +118,8 @@ void DPerson::update(){
 	getAddressSpaceLink()->getActualHeight(height);
 	OpcUa_Double weight;
 	getAddressSpaceLink()->getActualWeight(weight);
-	weight+=addedWeight;
-	getAddressSpaceLink()->setActualWeight(weight,OpcUa_Good);
-	addedWeight = 0;
+	//weight+=addedWeight;
+	//getAddressSpaceLink()->setActualWeight(weight,OpcUa_Good);
+	//addedWeight = 0;
 }
 }
