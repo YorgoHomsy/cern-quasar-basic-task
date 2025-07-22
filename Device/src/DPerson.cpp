@@ -88,9 +88,14 @@ UaStatus DPerson::callEat (
 		return OpcUa_BadInvalidState;
 	}
 
-	OpcUa_Double weight;
-	OpcUa_Double current_weight = getAddressSpaceLink()->getActualWeight(weight);
-	OpcUa_Double new_weight = weight + amount;
+//	OpcUa_Double weight;
+//	OpcUa_Double current_weight = getAddressSpaceLink()->getActualWeight(weight);
+//	OpcUa_Double new_weight = weight + amount;
+//	getAddressSpaceLink()->setActualWeight(new_weight, OpcUa_Good);
+
+
+
+	OpcUa_Double new_weight = getAddressSpaceLink()->getActualWeight(new_weight) + amount;
 	getAddressSpaceLink()->setActualWeight(new_weight, OpcUa_Good);
 
     return OpcUa_Good;
@@ -105,6 +110,7 @@ UaStatus DPerson::callCalculateBMI (
 	getAddressSpaceLink()->getActualHeight(height);
 	getAddressSpaceLink()->getActualWeight(weight);
     BMI = weight/ std::pow(height*std::pow(10, -2) , 2);
+    getAddressSpaceLink()->setTheBMI(BMI,OpcUa_Good);
     return OpcUa_Good;
 }
 
@@ -114,12 +120,12 @@ UaStatus DPerson::callCalculateBMI (
 // 3     You can do whatever you want, but please be decent.               3
 // 33333333333333333333333333333333eightSet(rand(),ua_good);33333333333333333333333333333333333333333
 void DPerson::update(){
-	OpcUa_Double height;
-	getAddressSpaceLink()->getActualHeight(height);
-	OpcUa_Double weight;
-	getAddressSpaceLink()->getActualWeight(weight);
-	//weight+=addedWeight;
-	//getAddressSpaceLink()->setActualWeight(weight,OpcUa_Good);
-	//addedWeight = 0;
+//	OpcUa_Double height;
+//	getAddressSpaceLink()->getActualHeight(height);
+//	OpcUa_Double weight;
+//	getAddressSpaceLink()->getActualWeight(weight);
+//	//weight+=addedWeight;
+//	//getAddressSpaceLink()->setActualWeight(weight,OpcUa_Good);
+//	//addedWeight = 0;
 }
 }
