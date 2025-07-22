@@ -4,17 +4,7 @@
   	<d:devicelogic></d:devicelogic>
   	<d:configentry dataType="UaString" name="Name"></d:configentry>
   	<d:cachevariable initializeWith="valueAndStatus"
-  		dataType="OpcUa_Double" name="HeightSet" nullPolicy="nullForbidden"
-  		addressSpaceWrite="regular" initialStatus="OpcUa_Good"
-  		initialValue="0">
-  	</d:cachevariable>
-  	<d:cachevariable initializeWith="valueAndStatus"
   		dataType="OpcUa_Double" name="ActualHeight" nullPolicy="nullAllowed"
-  		addressSpaceWrite="regular" initialStatus="OpcUa_Good"
-  		initialValue="0">
-  	</d:cachevariable>
-  	<d:cachevariable initializeWith="valueAndStatus"
-  		dataType="OpcUa_Double" name="WeightSet" nullPolicy="nullForbidden"
   		addressSpaceWrite="regular" initialStatus="OpcUa_Good"
   		initialValue="0">
   	</d:cachevariable>
