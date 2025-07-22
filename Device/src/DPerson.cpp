@@ -65,6 +65,18 @@ DPerson::~DPerson ()
 
 /* delegates for cachevariables */
 
+/* Note: never directly call this function. */
+
+UaStatus DPerson::writeActualHeight ( const OpcUa_Double& v)
+{
+    if(v<=0){
+    	return OpcUa_BadInvalidArgument;
+    }
+    if(v>300){
+    	return OpcUa_BadOutOfRange;
+    }
+	return OpcUa_Good;
+}
 
 
 /* delegators for methods */

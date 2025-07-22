@@ -4,9 +4,9 @@
   	<d:devicelogic></d:devicelogic>
   	<d:configentry dataType="UaString" name="Name"></d:configentry>
   	<d:cachevariable initializeWith="valueAndStatus"
-  		dataType="OpcUa_Double" name="ActualHeight" nullPolicy="nullAllowed"
-  		addressSpaceWrite="regular" initialStatus="OpcUa_Good"
-  		initialValue="0">
+  		dataType="OpcUa_Double" name="ActualHeight" nullPolicy="nullForbidden"
+  		addressSpaceWrite="delegated" initialStatus="OpcUa_Good"
+  		initialValue="10">
   	</d:cachevariable>
   	<d:cachevariable initializeWith="valueAndStatus"
   		dataType="OpcUa_Double" name="ActualWeight" nullPolicy="nullAllowed"

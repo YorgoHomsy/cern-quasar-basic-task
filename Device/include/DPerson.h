@@ -42,6 +42,8 @@ public:
 
     /* delegators for
     cachevariables and sourcevariables */
+    /* Note: never directly call this function. */
+    UaStatus writeActualHeight ( const OpcUa_Double& v);
 
 
     /* delegators for methods */
