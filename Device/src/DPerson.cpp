@@ -92,7 +92,7 @@ UaStatus DPerson::callCalculateBMI (
         return OpcUa_BadInvalidArgument;
     }
 
-    BMI = weight*std::pow(10, -2) / std::pow(height, 2);
+    BMI = weight/ std::pow(height*std::pow(10, -2) , 2);
     return OpcUa_Good;
 }
 
