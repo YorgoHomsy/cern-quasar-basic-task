@@ -87,10 +87,9 @@ UaStatus DPerson::callEat (
 // 33333333333333333333333333333333eightSet(rand(),ua_good);33333333333333333333333333333333333333333
 void DPerson::update(){
 	OpcUa_Double height;
-	getAddressSpaceLink()->getHeightSet(height);
-	getAddressSpaceLink()->setActualHeight(height,OpcUa_Good);
+	getAddressSpaceLink()->getActualHeight(height);
 	OpcUa_Double weight;
-	getAddressSpaceLink()->getWeightSet(weight);
+	getAddressSpaceLink()->getActualWeight(weight);
 	weight+=addedWeight;
 	getAddressSpaceLink()->setActualWeight(weight,OpcUa_Good);
 	addedWeight = 0;
