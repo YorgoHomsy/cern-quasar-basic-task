@@ -48,6 +48,9 @@ public:
     UaStatus callEat (
         OpcUa_Double amount
     ) ;
+    UaStatus callCalculateBMI (
+        OpcUa_Double& BMI
+    ) ;
 
 private:
     /* Delete copy constructor and assignment operator */

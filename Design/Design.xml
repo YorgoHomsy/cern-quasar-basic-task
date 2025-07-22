@@ -17,6 +17,10 @@
   		executionSynchronicity="synchronous">
   		<d:argument dataType="OpcUa_Double" name="amount"></d:argument>
   	</d:method>
+  	<d:method addressSpaceCallUseMutex="no" name="calculateBMI"
+  		executionSynchronicity="synchronous">
+  		<d:returnvalue dataType="OpcUa_Double" name="BMI"></d:returnvalue>
+  	</d:method>
   </d:class>
   <d:class name="Family">
   	<d:devicelogic></d:devicelogic>

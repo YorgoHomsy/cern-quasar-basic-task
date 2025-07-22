@@ -79,6 +79,12 @@ UaStatus DPerson::callEat (
 	addedWeight = amount;
     return OpcUa_Good;
 }
+UaStatus DPerson::callCalculateBMI (
+    OpcUa_Double& BMI
+)
+{
+    return OpcUa_BadNotImplemented;
+}
 
 // 3333333333333333333333333333333333333333333333333333333333333333333333333
 // 3     FULLY CUSTOM CODE STARTS HERE                                     3
