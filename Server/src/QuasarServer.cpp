@@ -26,6 +26,8 @@
 #include "QuasarServer.h"
 #include <LogIt.h>
 #include <shutdown.h>
+#include "DRoot.h"
+#include "DFamily.h"
 
 QuasarServer::QuasarServer() : BaseQuasarServer()
 {
@@ -45,7 +47,12 @@ void QuasarServer::mainLoop()
 
     while(ShutDownFlag() == 0)
     {
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+
+        for(Device::DFamily* family : Device::DRoot::getInstance()->familys()){
+        	family->update();
+        }
+
     }
     printServerMsg(" Shutting down server");
 }

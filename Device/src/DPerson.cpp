@@ -73,6 +73,8 @@ DPerson::~DPerson ()
 // 3     FULLY CUSTOM CODE STARTS HERE                                     3
 // 3     Below you put bodies for custom methods defined for this class.   3
 // 3     You can do whatever you want, but please be decent.               3
-// 3333333333333333333333333333333333333333333333333333333333333333333333333
-
+// 33333333333333333333333333333333eightSet(rand(),ua_good);33333333333333333333333333333333333333333
+void DPerson::update(){
+	getAddressSpaceLink()->setWeightSet(rand(),OpcUa_Good);
+}
 }
