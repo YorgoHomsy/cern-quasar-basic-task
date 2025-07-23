@@ -9,7 +9,7 @@
   	</d:cachevariable>
   	<d:cachevariable initializeWith="configuration"
   		dataType="OpcUa_Double" name="ActualWeight" nullPolicy="nullAllowed"
-  		addressSpaceWrite="regular">
+  		addressSpaceWrite="delegated">
   	</d:cachevariable>
   	<d:method addressSpaceCallUseMutex="no" name="eat"
   		executionSynchronicity="synchronous">

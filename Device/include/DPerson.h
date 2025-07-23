@@ -44,6 +44,8 @@ public:
     cachevariables and sourcevariables */
     /* Note: never directly call this function. */
     UaStatus writeActualHeight ( const OpcUa_Double& v);
+    /* Note: never directly call this function. */
+    UaStatus writeActualWeight ( const OpcUa_Double& v);
 
 
     /* delegators for methods */
@@ -68,12 +70,12 @@ public:
     void update();
 
 
+
 private:
     //OpcUa_Double addedWeight;
 
     OpcUa_Double lastHeight;
     OpcUa_Double lastWeight;
-
 
 };
 

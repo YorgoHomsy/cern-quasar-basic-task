@@ -78,6 +78,11 @@ UaStatus DPerson::writeActualHeight ( const OpcUa_Double& v)
 	return OpcUa_Good;
 }
 
+/* Note: never directly call this function. */
+UaStatus DPerson::writeActualWeight ( const OpcUa_Double& v)
+{
+    return OpcUa_BadNotImplemented;
+}
 
 /* delegators for methods */
 UaStatus DPerson::callEat (
@@ -122,17 +127,20 @@ void DPerson::update(){
 //	//weight+=addedWeight;
 //	//getAddressSpaceLink()->setActualWeight(weight,OpcUa_Good);
 //	//addedWeight = 0;
-	OpcUa_Double currentHeight;
-	OpcUa_Double currentWeight;
-	getAddressSpaceLink()->getActualHeight(currentHeight);
-	getAddressSpaceLink()->getActualWeight(currentWeight);
 
-	if(currentHeight != lastHeight || currentWeight != lastWeight){
-		OpcUa_Double BMI;
-		callCalculateBMI(BMI);
-		getAddressSpaceLink()->setTheBMI(BMI,OpcUa_Good);
-		lastHeight = currentHeight;
-		lastWeight = currentWeight;
-	}
+
+//	OpcUa_Double currentHeight;
+//	OpcUa_Double currentWeight;
+//	getAddressSpaceLink()->getActualHeight(currentHeight);
+//	getAddressSpaceLink()->getActualWeight(currentWeight);
+//
+//	if(currentHeight != lastHeight || currentWeight != lastWeight){
+//		OpcUa_Double BMI;
+//		callCalculateBMI(BMI);
+//		getAddressSpaceLink()->setTheBMI(BMI,OpcUa_Good);
+//		lastHeight = currentHeight;
+//		lastWeight = currentWeight;
+//	}
 }
+
 }
