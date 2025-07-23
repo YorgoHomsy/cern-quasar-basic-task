@@ -3,15 +3,13 @@
   <d:class name="Person">
   	<d:devicelogic></d:devicelogic>
   	<d:configentry dataType="UaString" name="Name"></d:configentry>
-  	<d:cachevariable initializeWith="valueAndStatus"
+  	<d:cachevariable initializeWith="configuration"
   		dataType="OpcUa_Double" name="ActualHeight" nullPolicy="nullForbidden"
-  		addressSpaceWrite="delegated" initialStatus="OpcUa_Good"
-  		initialValue="10">
+  		addressSpaceWrite="delegated">
   	</d:cachevariable>
-  	<d:cachevariable initializeWith="valueAndStatus"
+  	<d:cachevariable initializeWith="configuration"
   		dataType="OpcUa_Double" name="ActualWeight" nullPolicy="nullAllowed"
-  		addressSpaceWrite="regular" initialStatus="OpcUa_Good"
-  		initialValue="0">
+  		addressSpaceWrite="regular">
   	</d:cachevariable>
   	<d:method addressSpaceCallUseMutex="no" name="eat"
   		executionSynchronicity="synchronous">

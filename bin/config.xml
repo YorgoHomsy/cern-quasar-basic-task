@@ -2,5 +2,7 @@
 <configuration xmlns="http://cern.ch/quasar/Configuration" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://cern.ch/quasar/Configuration ../Configuration/Configuration.xsd ">
 
 	<Family name="f1" Name="Homsi" City="Beirut">
-		<Person name="p1" Name="Yorgo"></Person>
-		<Person name="p2" Name="Melissa"></Person></Family></configuration>
+		<Person name="p1" Name="Yorgo" ActualHeight="10" ActualWeight="0"></Person>
+		<Person name="p2" Name="Melissa" ActualHeight="10"
+			ActualWeight="0">
+		</Person></Family></configuration>
