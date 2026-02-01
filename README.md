@@ -1,93 +1,138 @@
-# first_task
+# CERN Quasar Basic Task – Family & Person OPC UA Server
+
+This project was my **second hands-on exercise at CERN** during my summer internship 2025, where I implemented an OPC UA server independently using **C++** and the **Quasar framework**. The project allowed me to apply hierarchical class design, implement cache variables, develop server-side methods, and validate functionality using UaExpert.
+
+The server models a **Family → Person hierarchy**, where each Person object has physical attributes and methods that automatically update dependent variables like BMI.
 
 
 
-## Getting started
+---
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## Project Overview
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+The objectives of this project were to:
 
-## Add your files
+* **Reinforce OPC UA concepts** after completing the introductory project.
+* **Design a hierarchical class structure**: `Family` → `Person`.
+* **Implement cache variables** for physical attributes (height, weight) with validation logic.
+* **Implement methods** (`eat()`, `calculateBMI()`) to modify and compute data on the server.
+* **Validate functionality** using UaExpert to subscribe to variables and monitor updates.
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+---
+
+## Class Hierarchy
+
+The server consists of two main classes:
+
+* **Family** (parent class): Contains multiple Person objects.
+* **Person** (child class): Stores physical attributes and exposes methods.
+
+### Person Object Attributes
+* **Cache Variables**
+  * `ActualHeight` (Double, Read/Write)
+  * `ActualWeight` (Double, Read/Write)
+  * `TheBMI` (Double, Read-only)
+* **Methods**
+  * `eat(double amount)`: Increases weight and triggers BMI recalculation.
+  * `calculateBMI()`: Computes BMI based on the following formula:
+  
+$$BMI = \frac{Weight_{kg}}{(Height_{m})^2}$$
+
+![Class Structure](assets/class_structure.png)
+
+---
+
+## Key Implementation Snippets
+
+### 1. Family: Updating Child Person Objects
+The Family class iterates through its child Person objects to trigger their internal update cycles.
+
+```cpp
+void DFamily::update() {
+    for(DPerson* person : persons()) {
+        person->update();
+    }
+}
 
 ```
-cd existing_repo
-git remote add origin https://gitlab.cern.ch/yhomsi/first_task.git
-git branch -M master
-git push -uf origin master
+
+### 2. Person: Validated Cache Variable Updates
+The Person class validates inputs (e.g., preventing negative height) and triggers dependent calculations automatically upon a successful write.
+
+```cpp
+UaStatus DPerson::writeActualHeight(const OpcUa_Double& v) {
+    if(v <= 0 || v > 300){
+        return OpcUa_BadInvalidArgument;
+    }
+    getAddressSpaceLink()->setActualHeight(v, OpcUa_Good);
+
+    OpcUa_Double BMI;
+    callCalculateBMI(BMI); // Recalculate BMI immediately after change
+
+    return OpcUa_Good;
+}
+
+UaStatus DPerson::writeActualWeight(const OpcUa_Double& v) {
+    if(v <= 0){
+        return OpcUa_BadInvalidArgument;
+    }
+    getAddressSpaceLink()->setActualWeight(v, OpcUa_Good);
+
+    OpcUa_Double BMI;
+    callCalculateBMI(BMI);
+
+    return OpcUa_Good;
+}
 ```
 
-## Integrate with your tools
+### 3. Person: BMI Calculation Method
+This server-side method pulls the latest cache values and updates the read-only TheBMI variable.
 
-- [ ] [Set up project integrations](https://gitlab.cern.ch/yhomsi/first_task/-/settings/integrations)
+```cpp
+UaStatus DPerson::callCalculateBMI(OpcUa_Double& BMI) {
+    OpcUa_Double height, weight;
+    getAddressSpaceLink()->getActualHeight(height);
+    getAddressSpaceLink()->getActualWeight(weight);
 
-## Collaborate with your team
+    // Height is converted from cm to meters for the calculation
+    BMI = weight / std::pow(height * 1e-2, 2);
+    getAddressSpaceLink()->setTheBMI(BMI, OpcUa_Good);
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+    return OpcUa_Good;
+}
+```
 
-## Test and Deploy
+---
 
-Use the built-in continuous integration in GitLab.
+## Validation & Testing
+The server functionality was validated using **UaExpert**:
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+- [x] **Data Integrity**: Wrote values to `ActualHeight` and `ActualWeight`; verified the server rejected invalid inputs (e.g., 0 or negative values).
+- [x] **Automation**: Observed automatic updates to the read-only variable `TheBMI` whenever height or weight changed.
+- [x] **Methods**: Invoked `eat()` method and verified `ActualWeight` and `TheBMI` were updated correctly in real-time.
+- [x] **Multi-Instance**: Confirmed that multiple `Person` objects under a `Family` maintained their own unique states.
 
-***
+---
 
-# Editing this README
+## Key Features
+* **OPC UA Server**: Fully implemented in **C++** using the **Quasar framework**.
+* **Hierarchical Structure**: Object-oriented design: `Family` → `Person`.
+* **Smart Cache Variables**: Implemented read/write variables with validation logic.
+* **Automated Calculations**: Server-side logic ensures dependent variables stay synchronized.
+* **Validation**: Real-time monitoring and method testing via **UaExpert**.
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+---
 
-## Suggestions for a good README
+## Technologies Used
+* **Languages**: C++ (Core logic), Python (Automation), Jinja2 (Templates).
+* **Frameworks & Tools**: Quasar Framework, UaExpert.
+* **Environment**: WSL / Linux Development.
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+---
 
-## Name
-Choose a self-explaining name for your project.
+## Learning Outcomes
+* **Independent Design**: Designed and implemented OPC UA object hierarchies from scratch.
+* **Input Validation**: Applied robust validation logic to server-side variables.
+* **Logic Synchronization**: Implemented automatic updates of dependent variables (BMI).
+* **Professional Standards**: Reinforced real-time testing and documentation practices in an industrial framework.
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
